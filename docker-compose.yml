@@ -1,0 +1,9 @@
+services:
+  micrus:
+    build:
+      context: .
+      network: host
+      dockerfile: Dockerfile
+    image: micrus
+    ports:
+      - "9090:8080"
