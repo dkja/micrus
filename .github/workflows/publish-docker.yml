@@ -20,7 +20,7 @@ jobs:
       - uses: actions/checkout@v4
 
       - name: Login to containers registry
-        uses: docker/login-action@65b78e6e13532edd9afa3aa52ac7964289d1a9c1
+        uses: docker/login-action@v3
         with:
           registry: ${{ env.REGISTRY }}
           username: ${{ github.actor }}
@@ -28,19 +28,21 @@ jobs:
 
       - name: Extract metadata for Docker
         id: docker-metadata
-        uses: docker/metadata-action@9ec57ed1fcdbf14dcef7dfbe97b2010124a938b7
+        uses: docker/metadata-action@v5
         with:
           images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
 
       - name: Build and publish
         id: publish
-        uses: docker/build-push-action@f2a1d5e99d037542a71f64918e516c093c6f3fc4
+        uses: docker/build-push-action@v6
         with:
           context: .
           network: host
           push: true
           tags: ${{ steps.docker-metadata.outputs.tags }}
           labels: ${{ steps.docker-metadata.outputs.labels }}
+          cache-from: type/gha
+          cache-to: type=gha,mode=max
 
       - name: Generate attestation
         uses: actions/attest-build-provenance@v2
