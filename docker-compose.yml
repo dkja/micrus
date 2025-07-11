@@ -6,4 +6,4 @@ services:
       dockerfile: Dockerfile
     image: micrus
     ports:
-      - "9090:8080"
+      - "8080:8080"
