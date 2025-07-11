@@ -6,6 +6,7 @@ on:
 env:
   REGISTRY: ghcr.io
   IMAGE_NAME: ${{ github.repository }}
+  LAYERS_CACHE: /tmp/.custom-buildx-cache
 
 jobs:
   build-and-push:
@@ -18,6 +19,14 @@ jobs:
 
     steps:
       - uses: actions/checkout@v4
+
+      - name: Cache docker layers
+        uses: actions/cache@v4
+        with:
+          path: ${{ env.LEYERS_CACHE }}
+          key: ${{ runner.os }}-buildx-${{ hashFiles('Dockerfile') }}
+          restore-keys: |
+            ${{ runner.os }}-buildx-
 
       - name: Login to containers registry
         uses: docker/login-action@v3
@@ -44,8 +53,8 @@ jobs:
           push: true
           tags: ${{ steps.docker-metadata.outputs.tags }}
           labels: ${{ steps.docker-metadata.outputs.labels }}
-          cache-from: type=registry,ref=${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:latest
-          cache-to: type=inline
+          cache-from: type=local,src=${{ env.LAYERS_CACHE }}
+          cache-to: type=local,dest=${{ env.LAYERS_CACHE }},mode=max
 
       - name: Generate attestation
         uses: actions/attest-build-provenance@v2
