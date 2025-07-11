@@ -4,17 +4,17 @@ WORKDIR /workspace
 #  Cache gradle
 COPY gradlew ./
 COPY gradle/wrapper ./gradle/wrapper
-RUN chmod +x ./gradlew && ./gradlew -v --no-daemon
+RUN chmod +x ./gradlew && ./gradlew -v
 
 # Cache dependencies
 COPY settings.gradle.kts .
 COPY app/build.gradle.kts ./app/
 COPY gradle/libs.versions.toml ./gradle/
-RUN ./gradlew dependencies --no-daemon
+RUN ./gradlew dependencies
 
 # Build app
 COPY app ./app
-RUN ./gradlew installDist --no-daemon
+RUN ./gradlew installDist
 
 
 # Build image

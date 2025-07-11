@@ -1,4 +1,3 @@
-
 package org.example
 
 import io.ktor.server.cio.*
@@ -13,10 +12,10 @@ import kotlin.time.ExperimentalTime
 fun main(): Unit = runBlocking {
     embeddedServer(CIO, port = 8080) {
         routing {
-            get("/"){
+            get("/") {
                 call.respondText("OK")
             }
-            get("/clock"){
+            get("/clock") {
                 val now = Clock.System.now()
                 val content = now.toString()
                 call.respondText(content)
