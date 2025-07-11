@@ -13,7 +13,6 @@ jobs:
     permissions:
       contents: read
       packages: write
-      actions: read
       attestations: write
       id-token: write
 
@@ -45,8 +44,8 @@ jobs:
           push: true
           tags: ${{ steps.docker-metadata.outputs.tags }}
           labels: ${{ steps.docker-metadata.outputs.labels }}
-          cache-from: type=gha
-          cache-to: type=gha,mode=max
+          cache-from: type=registry,ref=${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:latest
+          cache-to: type=inline
 
       - name: Generate attestation
         uses: actions/attest-build-provenance@v2
