@@ -27,8 +27,10 @@ jobs:
           path: ~/.custom-buildx-cache/
 #          key: ${{ runner.os }}-buildx-${{ hashFiles('Dockerfile') }}
           key: kurwa-jego-mac
-#          restore-keys: |
-#            ${{ runner.os }}-buildx-
+          restore-keys: |
+                kurwa-jego-
+                kurwa-
+      #            ${{ runner.os }}-buildx-
 
       - name: Login to containers registry
         uses: docker/login-action@v3
