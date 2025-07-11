@@ -12,7 +12,7 @@ import kotlin.time.ExperimentalTime
 fun main(): Unit = runBlocking {
     embeddedServer(CIO, port = 8080) {
         routing {
-            get("/") {
+            get("/"){
                 call.respondText("OK")
             }
             get("/clock") {
