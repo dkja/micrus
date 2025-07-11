@@ -7,7 +7,9 @@ repositories {
     mavenCentral()
 }
 
-dependencies {}
+dependencies {
+    implementation(libs.ktor.server.cio)
+}
 
 java {
     toolchain {
