@@ -1,4 +1,3 @@
-
 package org.example
 
 import io.ktor.server.cio.*
@@ -16,7 +15,7 @@ fun main(): Unit = runBlocking {
             get("/"){
                 call.respondText("OK")
             }
-            get("/clock"){
+            get("/clock") {
                 val now = Clock.System.now()
                 val content = now.toString()
                 call.respondText(content)
