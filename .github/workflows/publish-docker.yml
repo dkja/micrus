@@ -6,7 +6,6 @@ on:
 env:
   REGISTRY: ghcr.io
   IMAGE_NAME: ${{ github.repository }}
-  LAYERS_CACHE: ${{ runner.temp }}/.custom-buildx-cache/
 
 jobs:
   build-and-push:
@@ -24,7 +23,7 @@ jobs:
       - name: Cache docker layers
         uses: actions/cache@v4
         with:
-          path: ${{ env.LAYERS_CACHE }}
+          path: ${{ runner.temp }}/.custom-buildx-cache/
           key: ${{ runner.os }}-buildx-${{ hashFiles('Dockerfile') }}
           restore-keys: |
             ${{ runner.os }}-buildx-
@@ -54,8 +53,8 @@ jobs:
           push: true
           tags: ${{ steps.docker-metadata.outputs.tags }}
           labels: ${{ steps.docker-metadata.outputs.labels }}
-          cache-from: type=local,src=${{ env.LAYERS_CACHE }}
-          cache-to: type=local,dest=${{ env.LAYERS_CACHE }},mode=max
+          cache-from: type=local,src=${{ runner.temp }}/.custom-buildx-cache/
+          cache-to: type=local,dest=${{ runner.temp }}/.custom-buildx-cache/,mode=max
 
       - name: Generate attestation
         uses: actions/attest-build-provenance@v2
