@@ -1,20 +1,28 @@
 package org.example
 
-import io.ktor.http.HttpStatusCode
+import io.ktor.http.*
 import io.ktor.server.application.*
+import io.ktor.server.html.*
 import io.ktor.server.response.*
 import io.ktor.server.routing.*
+import kotlinx.html.*
 import java.time.ZoneId
 import java.time.ZonedDateTime
 import kotlin.random.Random
-import kotlin.time.Clock
 import kotlin.time.ExperimentalTime
 
 @OptIn(ExperimentalTime::class)
 fun Application.configureRouting() {
     routing {
         get("/") {
-            call.respondText("OK")
+            call.respondHtml {
+                head {
+                    title(content = "Dzień dobry")
+                }
+                body {
+                    h3 { +"Dzień dobry Moja Droga :*" }
+                }
+            }
         }
         get("/clock") {
 
@@ -24,7 +32,7 @@ fun Application.configureRouting() {
             val formatted = now.toString()
             call.respondText(formatted)
         }
-        post("user/{id}") {
+        post("/user/{id}") {
             val parameter = call.parameters["id"]
             val id = Random.Default.nextInt(1000)
 
