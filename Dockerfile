@@ -1,5 +1,7 @@
-FROM eclipse-temurin:21-alpine AS builder
+FROM ghcr.io/graalvm/graalvm-ce AS builder
 WORKDIR /workspace
+
+RUN gu install native-image
 
 #  Cache gradle
 COPY gradlew ./
@@ -14,14 +16,17 @@ RUN ./gradlew dependencies
 
 # Build app
 COPY app ./app
-RUN ./gradlew installDist
+
+RUN ./gradlew nativeCompile
 
 
 # Build image
-FROM eclipse-temurin:21-jre-alpine
+FROM alpine:latest
 WORKDIR /app
 
-COPY --from=builder /workspace/app/build/install/app /app
+RUN apk add libstdc++ libc6-compat
+
+COPY --from=builder /workspace/app/build/native/nativeCompile/app /app
 
 EXPOSE 8080
-CMD ["/app/bin/app", "-XX:MaxRAM=64m"]
+CMD ["/app/app"]

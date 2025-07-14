@@ -44,8 +44,8 @@ jobs:
           push: true
           tags: ${{ steps.docker-metadata.outputs.tags }}
           labels: ${{ steps.docker-metadata.outputs.labels }}
-          cache-from: type=registry,ref=${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:cache
-          cache-to: type=registry,ref=${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:cache,mode=max
+          cache-from: type=registry,ref=${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:graalvm-cache
+          cache-to: type=registry,ref=${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:graalvm-cache,mode=max
 
       - name: Generate attestation
         uses: actions/attest-build-provenance@v2
