@@ -24,4 +24,4 @@ WORKDIR /app
 COPY --from=builder /workspace/app/build/install/app /app
 
 EXPOSE 8080
-CMD ["/app/bin/app", "-XX:MaxRAM=64m"]
+ENTRYPOINT exec /app/bin/app
