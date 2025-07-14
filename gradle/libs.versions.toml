@@ -1,5 +1,6 @@
 [plugins]
 kotlin-jvm = { id = "org.jetbrains.kotlin.jvm", version = "2.1.20" }
+graalvm-buildtools-native = {id="org.graalvm.buildtools.native", version="0.10.6"}
 
 [versions]
 ktor = "3.2.1"
@@ -8,6 +9,7 @@ micrometer = "1.15.1"
 
 [libraries]
 ktor-server-cio = { group = "io.ktor", name = "ktor-server-cio", version.ref = "ktor" }
+ktor-server-core = { group = "io.ktor", name = "ktor-server-core", version.ref = "ktor" }
 ktor-server-html-builder = { group = "io.ktor", name = "ktor-server-html-builder", version.ref = "ktor" }
 ktor-server-call-logging = { group = "io.ktor", name = "ktor-server-call-logging", version.ref = "ktor" }
 ktor-server-metrics-micrometer = { group = "io.ktor", name = "ktor-server-metrics-micrometer", version.ref = "ktor" }
