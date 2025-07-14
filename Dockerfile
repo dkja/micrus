@@ -24,4 +24,4 @@ WORKDIR /app
 COPY --from=builder /workspace/app/build/install/app /app
 
 EXPOSE 8080
-ENTRYPOINT exec /app/bin/app
+ENTRYPOINT ["/app/bin/app"]
