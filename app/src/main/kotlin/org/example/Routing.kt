@@ -21,9 +21,20 @@ fun Application.configureRouting() {
                 }
                 body {
                     h3 { +"Dzień dobry Moja Droga :*" }
+                    img(alt = "pussycat", src = "/static/images/example.png")
                 }
             }
         }
+
+        get("/static/images/example.png"){
+            val resourceName = "/pussycat.png"
+            val stream = this::class.java.getResourceAsStream(resourceName)
+            if(stream == null) return@get call.respond(HttpStatusCode.NotFound)
+
+            val bytes = stream.readAllBytes()
+            call.respondBytes(bytes, ContentType.Image.PNG)
+        }
+
         get("/clock") {
 
             val polishZoneId = ZoneId.of("Europe/Warsaw")
